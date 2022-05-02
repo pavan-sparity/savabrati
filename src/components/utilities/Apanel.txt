@@ -1,0 +1,130 @@
+import React from 'react';
+import { 
+    Container,
+    Col,
+    Button,
+    Row   
+} from 'reactstrap';
+import './Apanel.css';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import sidebar from './AdminPanel/sidebar';
+
+
+const Apanel = () => {
+  
+  const navigate = useNavigate();
+  const handleChange=()=>{
+    navigate('/ManageUser');
+  }
+
+  const manageDonar=()=>{
+    navigate('/ManageDonars')
+  }
+
+  const ManageBloodRequest=()=>{
+    navigate('/ManageBloodRequests')
+  }
+
+
+
+  
+
+
+
+
+  return (
+
+    <div>
+
+      
+
+    <div className='abc'>
+    <sidebar/>
+    </div>
+
+
+
+
+
+
+    <div className='app1'>
+<Container>
+        <Row>
+    <Col
+      className="bg-light border admin"
+      lg="12"
+     
+    >
+      Welcome Admin
+    </Col>
+  </Row>
+
+
+  <Row>
+    <Col
+      className="bg-light border"
+      xs="4"
+      block
+    >
+<div>
+  <Button
+  block
+    color="info"
+    onClick={()=>{handleChange()}}
+  >
+    Manage Users
+  </Button>
+</div>
+
+<div>
+  <Button
+  block
+    color="info"
+    onClick={()=>{manageDonar()}}
+  >
+    Manage Donars
+  </Button>
+</div>
+
+<div>
+  <Button
+  block
+    color="info"
+    onClick={()=>{ManageBloodRequest()}}
+  >
+    Manage Blood Requests
+  </Button>
+</div>
+
+<div>
+ <Link to="/display"> <Button
+  block
+    color="info"
+    onClick={()=>navigate('/Display')}
+  >
+    Manage Enquiry
+  </Button></Link>
+</div>
+    </Col>
+    <Col
+      className="bg-light border"
+      xs="6"
+    >
+      .col-6
+    </Col>
+    <Col
+      className="bg-light border"
+      xs="2"
+    >
+       <button onClick={handleChange}>LOGOUT</button>
+    </Col>
+  </Row>
+
+        </Container>
+    </div>
+    </div>
+  )
+}
+
+export default Apanel

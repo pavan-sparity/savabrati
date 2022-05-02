@@ -1,0 +1,413 @@
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+export default function Form1() {
+  let navigate = useNavigate();
+  // States for registration
+
+  const [name, setname] = useState("");
+  const [age, setage] = useState("");
+  const [gender, setgender] = useState("");
+  const [bloodtype, setbloodtype] = useState("2");
+  const [bloodgroup, setbloodgroup] = useState("2");
+  const [units, setunits] = useState("");
+  const [accepted, setaccepted] = useState("");
+  const [deadline, setdeadline] = useState("");
+  const [mobile1, setmobile1] = useState("");
+  const [mobile2, setmobile2] = useState("");
+  const [hname, sethname] = useState("");
+  const [haddress, sethaddress] = useState("");
+  const [country, setcountry] = useState("");
+  const [state, setstate] = useState("");
+  const [district, setdistrict] = useState("");
+  const [area, setarea] = useState("");
+  const [pincode, setpincode] = useState("");
+
+  // States for checking the errors
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
+
+  // Handling the name change
+  const handlename = (e) => {
+    setname(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handleage = (e) => {
+    setage(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlegender = (e) => {
+    setgender(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlebloodtype = (e) => {
+    setbloodtype(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlebloodgroup = (e) => {
+    setbloodgroup(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handleunits = (e) => {
+    setunits(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handleaccepted = (e) => {
+    setaccepted(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handledeadline = (e) => {
+    setdeadline(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlemobile1 = (e) => {
+    setmobile1(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlemobile2 = (e) => {
+    setmobile2(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlehname = (e) => {
+    sethname(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlehaddress = (e) => {
+    sethaddress(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlecountry = (e) => {
+    setcountry(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlestate = (e) => {
+    setstate(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handledistrict = (e) => {
+    setdistrict(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlearea = (e) => {
+    setarea(e.target.value);
+    setSubmitted(false);
+  };
+
+  const handlepincode = (e) => {
+    setpincode(e.target.value);
+    setSubmitted(false);
+  };
+
+  // Handling the form submission
+
+  const handlesubmit = (e) => {
+    const data = {
+      benf_fullname: name,
+      benf_age: age,
+      benf_gender: gender,
+      benf_blood_type: bloodtype,
+      benf_bloodgroup: bloodgroup,
+      benf_units_required: units,
+      benf_acc_bloodgroup: accepted,
+      benf_deadline: deadline,
+      benf_mobile1: mobile1,
+      benf_mobile2: mobile2,
+      benf_hospital_name: hname,
+      benf_hospital_address: haddress,
+      benf_country: country,
+      benf_state: state,
+      benf_district: district,
+      benf_area: area,
+      benf_pincode: pincode,
+    };
+    axios
+      .post("http://localhost:4000/benfsignup", data)
+      .then(function(response){
+        console.log(data);
+        console.log(response);
+        e.preventDefault();
+        if (response.data.status == "success") {
+        if (
+          name === "" ||
+          age === "" ||
+          gender === "" ||
+          bloodtype === "" ||
+          bloodgroup === "" ||
+          units === "" ||
+          accepted === "" ||
+          deadline === "" ||
+          mobile1 === "" ||
+          mobile2 === "" ||
+          hname === "" ||
+          haddress === "" ||
+          country === "" ||
+          state === "" ||
+          district === "" ||
+          area === "" ||
+          pincode === ""
+        ) {
+          setError(true);
+          
+        } else {
+          setSubmitted(true);
+          setError(false);
+        }
+      }
+      else{
+        alert('error');
+      }
+      })  
+  };
+
+  // Showing success message
+  const successMessage = () => {
+    return (
+      <div
+        className="success"
+        style={{
+          display: submitted ? "" : "none",
+        }}
+      >
+        <h3 style={{color:"red"}}>User {name} successfully registered!!</h3>
+      </div>
+    );
+  };
+
+  // Showing error message if error is true
+  const errorMessage = () => {
+    return (
+      <div
+        className="error"
+        style={{
+          display: error  ? "" : "none",
+        }}
+      >
+        <h1 style={{color:"red"}}>Please fill all the fields</h1>
+      </div>
+    );
+  };
+
+  return (
+    <div className="form" style={{ marginTop: "80px", textAlign: "center" }}>
+      <div>
+        <h1>Blood Request Form</h1>
+      </div>
+
+      <div className="messages">
+        {errorMessage()}
+        {successMessage()}
+      </div>
+
+      <form>
+        <div>
+          <h4>Personal Information</h4>
+        </div>
+        <br />
+        <label className="label">Name</label>
+        <input
+          onChange={handlename}
+          className="input"
+          value={name}
+          type="text"
+        />{" "}
+        &nbsp;&nbsp;
+        <label className="label">Age</label>
+        <input onChange={handleage} className="input" value={age} type="text" />
+        <br />
+        <br />
+        <label>
+          <b>GENDER</b>
+        </label>
+        <select name="gender" onChange={handlegender} value={gender}>
+          <option>--Select Gender--</option>
+          <option value={1}>Male</option>
+          <option value={2}>Female</option>
+          <option value={3}>Other</option>
+        </select>
+        &nbsp;&nbsp;
+        <label>
+          <b>MOBILE NUMBER</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter your Mobile number"
+          name="mobile1"
+          onChange={handlemobile1}
+          value={mobile1}
+        />
+        &nbsp;&nbsp;
+        <label>
+          <b>ALTERNATE MOBILE NUMBER</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter your other number"
+          name="mobile2"
+          onChange={handlemobile2}
+          value={mobile2}
+        />
+        <br />
+        &nbsp;&nbsp;
+        <div>
+          <h4>
+            <u>Blood Information</u>
+          </h4>
+        </div>
+        <br />
+        <label>
+          <b>BLOOD TYPE</b>
+        </label>
+        &nbsp;
+        <select name="bloodtype" onChange={handlebloodtype} value={bloodtype}>
+          <option>--Select Blood Type--</option>
+          <option value={1}>Platelets</option>
+          <option value={2}>Plasma</option>
+        </select>
+        &nbsp;
+        <label>
+          <b>BLOOD GROUP</b>
+        </label>
+        &nbsp;
+        <select
+          name="bloodgroup"
+          onChange={handlebloodgroup}
+          value={bloodgroup}
+        >
+          <option>--Select Blood--</option>
+          <option value={1}>A+</option>
+          <option value={2}>A-</option>
+          <option value={3}>B+</option>
+          <option value={4}>B-</option>
+          <option value={5}>AB+</option>
+          <option value={6}>AB-</option>
+          <option value={7}>O+</option>
+          <option value={8}>O-</option>
+        </select>
+        &nbsp;
+        <label className="label">NO. OF UNITS REQ</label>&nbsp;
+        <input
+          onChange={handleunits}
+          className="input"
+          value={units}
+          type="text"
+        />
+        <br />
+        <label>
+          <b>ACCEPTED BLOOD GROUP</b>
+        </label>
+        <select name="accepted" onChange={handleaccepted} value={accepted}>
+          <option>--Select Blood--</option>
+          <option value={1}>A+</option>
+          <option value={2}>A-</option>
+          <option value={3}>B+</option>
+          <option value={4}>B-</option>
+          <option value={5}>AB+</option>
+          <option value={6}>AB-</option>
+          <option value={7}>O+</option>
+          <option value={8}>O-</option>
+        </select>
+        <label>
+          <b>DEADLINE</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter Deadline"
+          name="deadline"
+          onChange={handledeadline}
+          value={deadline}
+        />
+        <br />
+        <div className="col">
+          <h4 className="text-center">Location Information</h4>
+        </div>
+        <label>
+          <b>HOSPITAL NAME</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter Your Full Address"
+          name="address"
+          onChange={handlehname}
+          value={hname}
+        />
+        <label>
+          <b>HOSPITAL ADDRESS</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter Your Full Address"
+          name="address"
+          onChange={handlehaddress}
+          value={haddress}
+        />
+        <label>
+          <b>PINCODE</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter your Pincode"
+          name="pincode"
+          onChange={handlepincode}
+          value={pincode}
+        />
+        <br />
+        <label>
+          <b>COUNTRY</b>
+        </label>
+        <select name="country" onChange={handlecountry} value={country}>
+          <option>-Select Country-</option>
+          <option value={1}>India</option>
+          <option value={2}>USA</option>
+          <option value={3}>UK</option>
+        </select>
+        <label>
+          <b>STATE</b>
+        </label>
+        <select name="state" onChange={handlestate} value={state}>
+          <option>-Select State-</option>
+          <option value={1}>Telangana</option>
+          <option value={2}>Andhrapradesh</option>
+          <option value={3}>Other</option>
+        </select>
+        <br />
+        <label>
+          <b>DISTRICT</b>
+        </label>
+        <select name="district" onChange={handledistrict} value={district}>
+          <option>-Select Dist-</option>
+          <option value={1}>Hyderabad</option>
+          <option value={2}>Guntur</option>
+          <option value={3}>Karimnagar</option>
+        </select>
+        <label>
+          <b>AREA</b>
+        </label>
+        <select name="area" onChange={handlearea} value={area}>
+          <option>-Select Area-</option>
+          <option value={1}>Madhapur</option>
+          <option value={2}>Hitech city</option>
+          <option value={3}>Jubliee Hills</option>
+        </select><br/>
+        <input type="button" onClick={handlesubmit} className="" value="Submit"/>
+        
+      </form>
+    </div>
+  );
+}
+
